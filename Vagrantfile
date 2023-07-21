@@ -34,6 +34,7 @@ Vagrant.configure("2") do |config|
     rsync__exclude: ".git/"
     repo.vm.provider :libvirt do |libvirt|
       libvirt.memory = 2048
+      libvirt.cpus = 2
       libvirt.storage :file, :device => :cdrom, :path => isopath
     end
 
@@ -77,6 +78,10 @@ Vagrant.configure("2") do |config|
   config.vm.define :control do |control|
     control.vm.box = "joaofcgsilva/rhel9"
     control.vm.network :private_network, ip: "10.0.0.100"
+    control.vm.provider :libvirt do |libvirt|
+      libvirt.memory = 2048
+      libvirt.cpus = 2
+    end
     control.vm.hostname = "control.rhce-ex294.com"
     control.vm.provision "shell", inline: "touch control"
     control.vm.provision :ansible do |ansible|
