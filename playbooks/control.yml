@@ -74,10 +74,10 @@
     service: name=firewalld state=restarted
   #- name: Configuring network
   #  shell: nmcli con mod 'System eth1' ipv4.addresses 10.0.0.100/24 ipv4.gateway 192.168.55.1 ipv4.dns 8.8.8.8 ipv4.dns-search rhce-ex294.com ipv4.method manual
-  - name: Reloaded Network
-    service:
-      name: NetworkManager
-      state: restarted
+  # - name: Reloaded Network
+  #   service:
+  #     name: NetworkManager
+  #     state: restarted
 #  - name: Generating RSA Key
 #    command : ssh-keygen -q -t rsa -f /home/user/.ssh/id_rsa -C "" -N ""
 #    become: yes

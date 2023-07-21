@@ -9,7 +9,13 @@ echo "export VAGRANT_DEFAULT_PROVIDER=libvirt" >> ~/.bashrc
 
 
 # TO DO
-set up control with ansible
-create playbooks to set up the env for repo
-create playbook to set up the env for nodes
 check storages
+create local repo on repo 
+https://www.redhat.com/sysadmin/apache-yum-dnf-repo
+https://access.redhat.com/solutions/23016
+or a copy of remote repo
+montar localmente ou nao
+sudo dnf install -y yum-utils # so we can get reposync
+user comando reposync
+
+criar o local.repo com multiline echo

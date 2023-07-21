@@ -15,49 +15,49 @@
       append: yes
   - name: Changing User Password
     shell: echo password | sudo passwd user --stdin
-  - name: Disabling services
-    selinux:
-      state: disabled
+  #- name: Disabling services
+  #  selinux:
+  #    state: disabled
   - name: Building Host File
     copy:
       dest: /etc/hosts
       content: "127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4\n:1         localhost localhost.localdomain localhost6localhost6.localdomain6\n10.0.0.10 repo.rhce-ex294.com repo\n10.0.0.100 control.rhce-ex294.com control\n10.0.0.101 node1.rhce-ex294.com node1\n10.0.0.102 node2.rhce-ex294.com node2\n10.0.0.103 node3.rhce-ex294.com node3\n10.0.0.104 node4.rhce-ex294.com node4"
       force: yes
-  - name: Enabling services
-    service:
-      name: "{{ item }}"
-      state: started
-      enabled: yes
-    with_items:
-      - httpd
-      - firewalld
-  - name: Enabling services
-    service:
-      name: "{{ item }}"
-      state: started
-      enabled: yes
-    with_items:
-      - httpd
-      - firewalld
-  - name: Starting Firewalld
-    firewalld: 
-      service: "{{ item }}"
-      immediate: yes
-      permanent: yes
-      state: enabled
-    with_items:
-      - http 
-      - https 
-      - ntp 
-      - dns 
-      - kerberos 
-      - ldap 
-      - ldaps 
-      - ftp
-  - name: Reloading Firewall
-    service: name=firewalld state=restarted
-  - name: Enabling IPV6
-    shell: sysctl net.ipv6.conf.lo.disable_ipv6=0 ; sysctl net.ipv6.conf.all.disable_ipv6=0
+  # - name: Enabling services
+  #   service:
+  #     name: "{{ item }}"
+  #     state: started
+  #     enabled: yes
+  #   with_items:
+  #     - httpd
+  #     - firewalld
+  # - name: Enabling services
+  #   service:
+  #     name: "{{ item }}"
+  #     state: started
+  #     enabled: yes
+  #   with_items:
+  #     - httpd
+  #     - firewalld
+  # - name: Starting Firewalld
+  #   firewalld: 
+  #     service: "{{ item }}"
+  #     immediate: yes
+  #     permanent: yes
+  #     state: enabled
+  #   with_items:
+  #     - http 
+  #     - https 
+  #     - ntp 
+  #     - dns 
+  #     - kerberos 
+  #     - ldap 
+  #     - ldaps 
+  #     - ftp
+  # - name: Reloading Firewall
+  #   service: name=firewalld state=restarted
+  # - name: Enabling IPV6
+  #   shell: sysctl net.ipv6.conf.lo.disable_ipv6=0 ; sysctl net.ipv6.conf.all.disable_ipv6=0
   - name: Creating Welcome Message
     file:
       path: /etc/profile.d/welcome.sh

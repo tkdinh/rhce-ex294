@@ -1,10 +1,13 @@
 Vagrant.require_version ">= 2.1.0" # 2.1.0 minimum required for triggers
 
+
+
 user = ENV['RH_SUBSCRIPTION_MANAGER_USER']
 password = ENV['RH_SUBSCRIPTION_MANAGER_PW']
+isopath = ENV['RHEL_ISO_PATH']
 
-if !user or !password
-  puts 'Required environment variables not found. Please set RH_SUBSCRIPTION_MANAGER_USER and RH_SUBSCRIPTION_MANAGER_PW'
+if !user or !password or !isopath
+  puts 'Required environment variables not found. Please set RH_SUBSCRIPTION_MANAGER_USER and RH_SUBSCRIPTION_MANAGER_PW and RHEL_ISO_PATH'
   abort
 end
 
@@ -30,7 +33,8 @@ Vagrant.configure("2") do |config|
     config.vm.synced_folder ".", "/vagrant", type: "rsync",
     rsync__exclude: ".git/"
     repo.vm.provider :libvirt do |libvirt|
-      libvirt.memory = 1024
+      libvirt.memory = 2048
+      libvirt.storage :file, :device => :cdrom, :path => isopath
     end
 
     repo.vm.network :private_network, ip: "10.0.0.10"
