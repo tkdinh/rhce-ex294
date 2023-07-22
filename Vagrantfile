@@ -6,6 +6,16 @@ user = ENV['RH_SUBSCRIPTION_MANAGER_USER']
 password = ENV['RH_SUBSCRIPTION_MANAGER_PW']
 isopath = ENV['RHEL_ISO_PATH']
 
+DISKS_1 = {
+  'd1a': ['./small-disk1.qcow2', '400M'],
+  'd1b': ['./large-disk1.qcow2', '5G']
+}
+
+DISKS_2 = {
+  'd2a': ['./small-disk2.qcow2', '400M'],
+  'd2b': ['./large-disk2.qcow2', '5G']
+}
+
 if !user or !password or !isopath
   puts 'Required environment variables not found. Please set RH_SUBSCRIPTION_MANAGER_USER and RH_SUBSCRIPTION_MANAGER_PW and RHEL_ISO_PATH'
   abort
@@ -55,12 +65,26 @@ Vagrant.configure("2") do |config|
   config.vm.define :node1 do |node1|
     node1.vm.box = "joaofcgsilva/rhel9"
     node1.vm.network :private_network, ip: "10.0.0.101"
+    # add two disks of different sizes to node 1
+    node1.vm.provider :libvirt do |libvirt|
+      DISKS_1.map do |key,value|
+        disk_path, disk_size = value
+        libvirt.storage :file, :size => disk_size
+      end
+    end
     node1.vm.provision "shell", path: "bootstrap-nodes.sh"
   end
   # configuration for node 2
   config.vm.define :node2 do |node2|
     node2.vm.box = "joaofcgsilva/rhel9"
     node2.vm.network :private_network, ip: "10.0.0.102"
+    # add two disks of different sizes to node 2
+    node2.vm.provider :libvirt do |libvirt|
+      DISKS_2.map do |key,value|
+        disk_path, disk_size = value
+        libvirt.storage :file, :size => disk_size
+      end
+    end
     node2.vm.provision "shell", path: "bootstrap-nodes.sh"
   end
   # configuration for node 3
