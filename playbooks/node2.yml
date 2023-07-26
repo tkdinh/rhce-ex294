@@ -38,7 +38,7 @@
   - name: Building Repo File
     copy:
       dest: /etc/yum.repos.d/ipa.repo
-      content: "[base]\nname=Base\nbaseurl=http://repo/BaseOS\ngpgcheck=0\nenabled=1\n\n[apps]\nname=Apps\nbaseurl=http://repo/AppStream\ngpgcheck=0\nenabled=1"
+      content: "[base]\nname=Base\nbaseurl=http://repo/mnt/BaseOS\ngpgcheck=0\nenabled=1\n\n[apps]\nname=Apps\nbaseurl=http://repo/mnt/AppStream\ngpgcheck=0\nenabled=1"
       force: yes
     tags: repo
   #- name: Configuring network

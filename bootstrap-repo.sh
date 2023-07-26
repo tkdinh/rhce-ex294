@@ -7,19 +7,24 @@ sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/
 #sudo localectl set-keymap pt
 
 # create repo to be served by apache
-sudo mkdir /local_repo
+sudo mkdir -p /local_repo/mnt /local_repo/automation
 
 # permanently add the iso mount
-sudo sed -i -e '$a/dev/sr0 /local_repo iso9660 ro 0 0\n' /etc/fstab
+sudo sed -i -e '$a/dev/sr0 /local_repo/mnt iso9660 ro 0 0\n' /etc/fstab
 sudo mount -a
 
 
 
 # configure the repo
-echo -e "[BaseOS]\nname=BaseOS\ngpgcheck=0\nbaseurl=file:///local_repo/BaseOS\n\n[AppStream]\nname=AppStream\ngpgcheck=0\nbaseurl=file:///local_repo/AppStream" | sudo tee /etc/yum.repos.d/local.repo
+echo -e "[BaseOS]\nname=BaseOS\ngpgcheck=0\nbaseurl=file:///local_repo/mnt/BaseOS\n\n[AppStream]\nname=AppStream\ngpgcheck=0\nbaseurl=file:///local_repo/mnt/AppStream" | sudo tee /etc/yum.repos.d/local.repo
 
 # install utils
 sudo dnf install -y yum-utils httpd
+
+# enable automation repo
+sudo subscription-manager repos --enable=ansible-automation-platform-2.4-for-rhel-9-x86_64-source-rpms
+
+sudo reposync -p /local_repo/automation --download-metadata --repoid=ansible-automation-platform-2.4-for-rhel-9-x86_64-rpms
 
 # configure apache
 sudo systemctl --now enable httpd
