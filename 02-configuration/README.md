@@ -7,7 +7,11 @@
 ### ansible.cfg
 * manages the project configuration
 
+<<<<<<< HEAD
 ````bash
+=======
+```bash
+>>>>>>> 9a4c755 (added new files)
 # generate ansible.cfg from template
 $ ansible-config init --disabled > ansible.cfg
 ```
