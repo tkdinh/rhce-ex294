@@ -12,14 +12,15 @@
 $ ansible-config init --disabled > ansible.cfg
 ```
 * important fields
-|key|value|
-|---|-------------------|
-|private_key_file|<path-to-ssh-key>|
-|become|True|
-|remote_user|automation|
-|host_key_checking|False|
-|become_user|root|
-|become_method|sudo|
+
+| key|value|
+| --- | ------------------- |
+| private_key_file |<path-to-ssh-key> |
+| become | True |
+| remote_user | automation |
+| host_key_checking | False |
+| become_user | root |
+| become_method | sudo |
 
 
 ##
