@@ -122,4 +122,26 @@
         - git
         - tree
       # - json_pp
-      state: present 
+      state: present
+  # create dir for repo if not exists
+  - name: create empty dir for repo
+    ansible.builtin.file:
+      path: /vagrant/home/rhce-ex294
+      state: directory
+      owner: vagrant
+      group: vagrant
+      mode: 0775
+  # check that dir is empty, if not skip git clone
+  - name: check if repo exists
+    ansible.builtin.stat:
+      path: /home/vagrant/rhce-ex294
+    register: filesFound
+
+  # update: no means the repo will only be cloned if it doesn't exist 
+  - name: Clone Repository
+    ansible.builtin.git:
+      repo: https://github.com/jfgsilva/rhce-ex294.git
+      dest: /home/vagrant/rhce-ex294
+      update: no
+    when: filesFound.stat.exists == false
+
