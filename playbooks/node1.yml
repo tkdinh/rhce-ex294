@@ -38,7 +38,7 @@
   - name: Building Repo File
     copy:
       dest: /etc/yum.repos.d/ipa.repo
-      content: "[base]\nname=Base\nbaseurl=http://repo/BaseOS\ngpgcheck=0\nenabled=1\n\n[apps]\nname=Apps\nbaseurl=http://repo/AppStream\ngpgcheck=0\nenabled=1"
+      content: "[base]\nname=Base\nbaseurl=http://repo/mnt/BaseOS\ngpgcheck=0\nenabled=1\n\n[apps]\nname=Apps\nbaseurl=http://repo/mnt/AppStream\ngpgcheck=0\nenabled=1"
       force: yes
   #- name: Configuring network
   #  command: nmcli con mod 'System eth1' ipv4.addresses 10.0.0.101/24 ipv4.gateway 192.168.55.1 ipv4.method manual
