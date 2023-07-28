@@ -116,3 +116,10 @@
         # Repo/AppStream 
         # Available to use from http://repo.rhce-ex294.com/BaseOS and http://repo.rhce-ex294.com/AppStream
         "
+  - name: Install additional software
+    ansible.builtin.dnf:
+      name: 
+        - git
+        - tree
+      # - json_pp
+      state: present 
