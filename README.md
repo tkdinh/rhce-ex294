@@ -34,4 +34,5 @@ Make sure that the following env variables are populated:
 
 Simply run `$ vagrant up`
 
-
+## Resetting the lab
+Run `$ reset_lab.sh`
