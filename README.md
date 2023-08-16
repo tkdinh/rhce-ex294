@@ -31,8 +31,11 @@ Make sure that the following env variables are populated:
 * RH_SUBSCRIPTION_MANAGER_USER = your redhat user
 * RH_SUBSCRIPTION_MANAGER_PW = your redhat account password
 * RHEL_ISO_PATH = the full path for thr redhat iso file 
+* get used to populate the .vimrc file so you can edit playbook files easily
+
 
 Simply run `$ vagrant up`
 
 ## Resetting the lab
 Run `$ reset_lab.sh`
+
