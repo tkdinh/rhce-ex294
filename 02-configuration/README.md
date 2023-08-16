@@ -23,4 +23,8 @@ $ ansible-config init --disabled > ansible.cfg
 | become_method | sudo |
 
 
-##
+### hosts
+you can populate a mock inventory with 
+```bash
+$ cp /etc/ansible/hosts ./inventory
+```
