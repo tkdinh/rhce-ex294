@@ -16,4 +16,4 @@
   tasks:
   - name: test httpd with uri module
     uri:
-      url: http://node2.rhce-example.com
+      url: http://node2.rhce-ex294.com

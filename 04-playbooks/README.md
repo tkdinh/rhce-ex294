@@ -102,5 +102,5 @@ or `ansible-navigator run install-several.yaml --check --diff`
 ### tips
 * use includes instead of large playbooks
 * uselocal host to verify accessibility of services on managed hosts
-* use -vvv flag to increase verbosity to debug
+* use -vv or -vvv flag to increase verbosity to debug
 

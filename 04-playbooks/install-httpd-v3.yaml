@@ -1,0 +1,52 @@
+
+---
+- name: Install and enable httpd
+  hosts: node2
+  tasks:
+  - name: install httpd and firewalld
+    dnf:
+      name: 
+        - httpd
+        - firewalld
+      state: present
+  - name: enable and start httpd
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+  - name: enable and start firewalld
+    service:
+      name: firewalld
+      state: started
+      enabled: yes
+      
+- name: Configure firewalld
+  hosts: node2
+  tasks:
+  - name: add http to allowed services
+    redhat.rhel_system_roles.firewall_lib:
+      service: http
+      state: enabled
+      permanent: true
+      immediate: yes
+  - name: restart firewalld
+    service:
+      name: firewalld
+      state: restarted
+
+- name: Configure httpd and restart
+  hosts: node2
+  tasks:
+  - name: Create landing page
+    copy:
+      content:
+        Hello World
+      dest: /var/www/html/index.html
+
+- name: Test httpd with localhost
+  hosts: localhost
+  tasks:
+  - name: test httpd with uri module
+    uri:
+      url: http://node2.rhce-ex294.com
+      validate_certs: false
