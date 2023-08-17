@@ -97,3 +97,10 @@ or `ansible-navigator run install-several.yaml --check --diff`
         this is line2
       dest: /home/vagrant/multiline2.file
 ```
+
+## multiplay playbooks
+### tips
+* use includes instead of large playbooks
+* uselocal host to verify accessibility of services on managed hosts
+* use -vvv flag to increase verbosity to debug
+

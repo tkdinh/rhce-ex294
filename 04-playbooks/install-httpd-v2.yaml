@@ -1,0 +1,19 @@
+---
+- name: Install and enable httpd
+  hosts: node2
+  tasks:
+  - name: install httpd
+    dnf:
+      name: httpd
+      state: present
+  - name: enable and start httpd
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+- name: Test httpd with localhost
+  hosts: localhost
+  tasks:
+  - name: test httpd with uri module
+    uri:
+      url: http://node2.rhce-example.com
