@@ -44,29 +44,32 @@ this playbook can be executed with
 ### lists
 ```yaml
 ---
-name: Install several packages
-hosts: node2
-tasks:
-  - name: install httpd and mysql and tmux
-  dnf:
-    name:
-      - httpd
-      - mysql
-      - tmux
-    state: latest
-```
+- name: task name here
+  become: yes
+  hosts: all # you can use limit clause
+  tasks:
+  - name: install httpd
+    dnf:
+      name: httpd
+      state: present
+  
+  - name: enable service
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+```      
 ```yaml
----
-name: Remove several packages
-hosts: node2
-tasks:
+- name: Remove several packages
+  hosts: node2
+  tasks:
   - name: Remove httpd and mysql and tmux
-  dnf:
-    name:
-      - httpd
-      - mysql
-      - tmux
-    state: absent
+    dnf:
+      name:
+        - httpd
+        - mysql
+        - tmux
+      state: absent
 ```
 
 
