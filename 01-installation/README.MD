@@ -1,7 +1,7 @@
 # Installation Guide
 
 ```bash
-$ sudo dnf install -y ansible-core ansible-navigator
+$ sudo dnf install -y ansible-core ansible-navigator rhel-system-roles
 ```
 or 
 ```python
