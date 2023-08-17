@@ -84,10 +84,16 @@ or `ansible-navigator run install-several.yaml --check --diff`
 - name: Create a file with multiline content
   hosts: node2
   tasks:
-    - name: Create a file with several lines inside using pipe symbol
-      copy:
-        content: |
-          this is line1
-          this is line2
+  - name: Create a file with several lines inside using pipe symbol
+    copy:
+      content: |
+        this is line1
+        this is line2
       dest: /home/vagrant/multiline.file
+  - name: Create a file with concatenating lines inside using > symbol
+    copy:
+      content: >
+        this is line1
+        this is line2
+      dest: /home/vagrant/multiline2.file
 ```
