@@ -30,3 +30,15 @@ playbook contains plays, plays contains tasks. The above playbook only contains 
 
 this playbook can be executed with
 `$ ansible-playbook -i inventory install-httpd.yaml --limit node2`
+
+## Playbook required keywords
+| level | keyword | usage |
+| ----- | ------- | ----- |
+| play | hosts | target hosts for the playbook|
+| play | name | The name of the play |
+| play | tasks | One or more tasks to be executed |
+| tasks | name | task name |
+| tasks | module name | module to be used in task |
+| task | arguments | arguments to be used in task |
+
+
