@@ -71,6 +71,8 @@ this playbook can be executed with
         - tmux
       state: absent
 ```
-
+## tips
+syntax check with
+`$ ansible-playbook remove-several.yaml --syntax-check`
 
 
