@@ -41,4 +41,33 @@ this playbook can be executed with
 | tasks | module name | module to be used in task |
 | task | arguments | arguments to be used in task |
 
+### lists
+```yaml
+---
+name: Install several packages
+hosts: node2
+tasks:
+  - name: install httpd and mysql and tmux
+  dnf:
+    name:
+      - httpd
+      - mysql
+      - tmux
+    state: latest
+```
+```yaml
+---
+name: Remove several packages
+hosts: node2
+tasks:
+  - name: Remove httpd and mysql and tmux
+  dnf:
+    name:
+      - httpd
+      - mysql
+      - tmux
+    state: absent
+```
+
+
 

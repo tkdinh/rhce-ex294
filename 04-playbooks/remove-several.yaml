@@ -1,0 +1,10 @@
+- name: Remove several packages
+  hosts: node2
+  tasks:
+  - name: Remove httpd and mysql and tmux
+    dnf:
+      name:
+        - httpd
+        - mysql
+        - tmux
+      state: absent
