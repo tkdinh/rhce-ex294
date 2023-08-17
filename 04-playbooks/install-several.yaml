@@ -1,0 +1,11 @@
+---
+- name: Install several packages
+  hosts: node2
+  tasks:
+  - name: install httpd and mysql and tmux
+    dnf:
+      name:
+        - httpd
+        - mysql
+        - tmux
+      state: latest
