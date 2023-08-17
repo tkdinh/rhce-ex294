@@ -1,0 +1,11 @@
+
+---
+- name: task name here
+  become: yes
+  hosts: all # you can use limit clause
+  tasks:
+  - name: remove httpd
+    dnf:
+      name: httpd
+      state: absent
+ 
