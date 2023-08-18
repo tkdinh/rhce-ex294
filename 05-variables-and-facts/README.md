@@ -91,10 +91,10 @@ ftp_service = vsftpd
     file:
       state: directory
       recurse: yes
-      path: {{ remote_dir }}
+      path: "{{ remote_dir }}"
   - name: Copy the facts file to remote host
     copy:
-      src: {{ facts_file }}
-      dest: {{ remote_dir }}
+      src: "{{ facts_file }}"
+      dest: "{{ remote_dir }}"
 ```
 
