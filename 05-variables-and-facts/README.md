@@ -50,6 +50,51 @@ if a value starts with a variable double-quotes must be used
 | ansible_facts['distribution_version'] | version |
 * ansible-doc -l | grep fact
 
+### disabling fact gathering
+* at the play level add gather_facts: no
 
+### enabling fact cache
+`$ sudo dnf install redis -y; systemctl --now enable redis`
 
+on ansible.cfg add:
+```ini
+[defaults] 
+gathering = smart
+fact_caching = redis
+fact_caching_timeout = 86400
+```
+### custom facts
+* stored under /etc/ansible/facts.d/* on **remote_host**
+* files must end in .fact extension
+* either INI or JSON format
+
+```ini
+[packages]
+web_package = httpd
+ftp_package = vsftpd
+
+[services]
+web_service = httpd
+ftp_service = vsftpd
+```
+
+#### exporting facts
+```yaml
+---
+- name: exporting facts to remote host
+  host: node3
+  vars:
+    remote_dir: /etc/ansible/facts.d
+    facts_file: node3_custom_facts.fact
+  tasks:
+  - name: Create remote dir
+    file:
+      state: directory
+      recurse: yes
+      path: {{ remote_dir }}
+  - name: Copy the facts file to remote host
+    copy:
+      src: {{ facts_file }}
+      dest: {{ remote_dir }}
+```
 

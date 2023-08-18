@@ -1,0 +1,16 @@
+---
+- name: exporting facts to remote host
+  host: node3
+  vars:
+    remote_dir: /etc/ansible/facts.d
+    facts_file: node3_custom_facts.fact
+  tasks:
+  - name: Create remote dir
+    file:
+      state: directory
+      recurse: yes
+      path: {{ remote_dir }}
+  - name: Copy the facts file to remote host
+    copy:
+      src: {{ facts_file }}
+      dest: {{ remote_dir }}
