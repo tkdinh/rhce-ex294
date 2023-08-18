@@ -98,3 +98,15 @@ ftp_service = vsftpd
       dest: "{{ remote_dir }}"
 ```
 
+#### using exported facts on playbooks
+* validate full fact expansion with `$ ansible node3 -m setup -a 'filter=ansible_local'`
+```yaml
+---
+- name: using exported facts
+  hosts: node3
+  tasks:
+  - name: install httpd using a fact instead of var
+    dnf:
+      name: "{{ ansible_facts['ansible_local']['node3_custom_facts']['packages']['web_package'] }}"
+      state: present
+```
