@@ -1,0 +1,9 @@
+---
+- name: Create a user using a variable
+  hosts: node3
+  vars:
+    users: gru
+  tasks:
+  - name: create user {{ users }} on host {{ ansible_hostname }}
+    user:
+      name: "{{ users }}"
