@@ -1,0 +1,10 @@
+---
+- name: display all facts
+  hosts: node3
+  tasks:
+  - name: return all facts
+    debug:
+      var: ansible_facts
+  - name: return dotted notation example
+    debug:
+        var: ansible_facts.default_ipv4.address
