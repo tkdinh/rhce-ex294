@@ -212,7 +212,7 @@ $ANSIBLE_VAULT;1.1;AES256
 3364386661646635383331336533393031336137643330386332
 ```
 ## example usage with playbook and commnd
-```
+```yaml
 ---
 - name: Example usage of a playbook using secrets
   hosts: all
@@ -242,6 +242,7 @@ $ANSIBLE_VAULT;1.1;AES256
       var: "file_contents"
 ```
 * additional keys which can be used with register
+
 | key | usage |
 | --- | ----- |
 | cmd | command used |
