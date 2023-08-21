@@ -1,0 +1,10 @@
+---
+- name: Capture command output with register
+  hosts: node1
+  tasks:
+  - name: first example of capturing values
+    shell: cat /etc/passwd
+    register: file_contents
+  - name: output the captured values
+    debug:
+      var: "file_contents"

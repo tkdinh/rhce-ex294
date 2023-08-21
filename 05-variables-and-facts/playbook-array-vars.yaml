@@ -1,0 +1,9 @@
+---
+- name: example usage of playbook with vars file using arrays
+  hosts: all
+  vars_files:
+  - vars/array_example 
+  tasks:
+  - name: list vars values
+    debug:
+      msg: "user {{ users.zabbix.username }} has home set to {{ users.zabbix.homedir }} and shell set to {{ users.zabbix.shell }}"

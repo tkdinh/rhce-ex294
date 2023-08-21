@@ -1,0 +1,9 @@
+users:
+  linda:
+    username: linda
+    homedir: /home/linda
+    shell: /bin/bash
+  zabbix:
+    username: zabbix
+    homedir: /var/lib/zabbix
+    shell: /sbin/nologin
