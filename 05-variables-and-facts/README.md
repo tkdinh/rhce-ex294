@@ -141,3 +141,114 @@ my_file_service: smb
 * group_vars
 * host_vars
 check [implicit include files](https://github.com/jfgsilva/rhce-ex294/tree/variables-facts/05-variables-and-facts/host-groups-vars)
+
+### multivalue variables
+
+#### vars file array_example - array example using dict notation
+```code
+users:
+  linda:
+    username: linda
+    homedir: /home/linda
+    shell: /bin/bash
+  zabbix:
+    username: zabbix
+    homedir: /var/lib/zabbix
+    shell: /sbin/nologin
+```
+then, the vars can be used as such
+```yaml
+---
+- name: example usage of playbook with vars file using arrays
+  hosts: all
+  vars_files:
+  - vars/array_example 
+  tasks:
+  - name: list vars values
+    debug:
+      msg: "user {{ users.zabbix.username }} has home set to {{ users.zabbix.homedir }} and shell set to {{ users.zabbix.shell }}"
+```
+### magic variables
+| variable | usage |
+| -------- | ----- |
+| hostvars | all hosts in inventory and assigned variables |
+| groups | all groups in inventory |
+| group_names | all groups current host is a member of |
+| inventory_hostname | inventory hostname for current host |
+* can be used with
+`$ ansible localhost -m debug -a 'var=hostvars["node1"]'`
+
+## Variable Precedence
+* always from most specific to most generic
+command > playbook > vars file
+
+# Vault
+* man ansible-vault
+| sub-command | description |
+| ----------- | ----------- |
+| create         | Create new vault encrypted file |
+| decrypt        | Decrypt vault encrypted file    |
+| edit           | Edit vault encrypted file       |
+| view           | View vault encrypted file       |
+| encrypt        | Encrypt YAML file               |
+| encrypt_string | Encrypt a string                |
+| rekey          | Re-key a vault encrypted file   |
+
+* positional arguments:
+  * --ask-vault-password
+  * --vault-password-file **don't forget to chmod 600 the password file**
+
+* sample command for running a playbook which references a vars file with encrypted content 
+`$ ansible-playbook -i inventory <playbook> --vault-password-file <path-to-password-file>`
+
+## example vault encrypted file
+```
+$ANSIBLE_VAULT;1.1;AES256
+34346266646333373732306630626430653065303839633766626466363164323265646231633131
+3930313363383863633166393031363764336134303137330a336365346664613036383734633834
+34366566653632363630613266373766343366636234646237613365663338323135333261396631
+6534616165326235390a616136383531353033303132643662316536643037626338343465326236
+61663562656436386666653466616262343363346663656637653738313664343466376538373065
+3364386661646635383331336533393031336137643330386332
+```
+## example usage with playbook and commnd
+```
+---
+- name: Example usage of a playbook using secrets
+  hosts: all
+  vars_files: vars/secrets.yaml
+  tasks:
+  - name: display the secrets 
+    debug:
+      msg: "this is the string for {{ username }} this is the string for {{ password }}"
+```
+* command usage
+`$ ansible-playbook playbook-using-secrets.yaml --limit node1 --ask-vault-password`
+```
+* can be automated using a vault password file
+
+# Capturing command output with **register**
+* vars used for capturing contents don't use {{ }}
+```yaml
+---
+- name: Capture command output with register
+  hosts: node1
+  tasks:
+  - name: first example of capturing values
+    shell: cat /etc/passwd
+    register: file_contents
+  - name: output the captured values
+    debug:
+      var: "file_contents"
+```
+* additional keys which can be used with register
+| key | usage |
+| --- | ----- |
+| cmd | command used |
+| rc | return of command code. 0 if successful |
+| stderr | error messages |
+| stderr_lines | same but line by line |
+| stdout | command output |
+| stdout_lines | same but line by line |
+
+
