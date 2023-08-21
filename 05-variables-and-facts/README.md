@@ -137,3 +137,7 @@ my_file_service: smb
 | magic variable | system variable automatically set |
 
 
+### vars in implicit include files
+* group_vars
+* host_vars
+check [a link](host-group-vars)
