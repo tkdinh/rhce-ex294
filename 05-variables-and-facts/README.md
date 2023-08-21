@@ -1,24 +1,4 @@
-# Variables
-
-## Vars in play section of playbooks
-if a value starts with a variable double-quotes must be used
-```yaml
----
-- name: Create a user using a variable
-  hosts: node3
-  vars:
-    users: gru
-  tasks:
-  - name: create user {{ users }} on host {{ ansible_hostname }}
-    user:
-      name: "{{ users }}"
-``` 
-## Variable types
-| type | Usage |
-| ---- | ----- |
-| fact | system propertie |
-| variable | user declared value |
-| magic variable | system variable automatically set |
+# Variables and Facts
 
 ## facts
 **ansible_facts**
@@ -110,3 +90,50 @@ ftp_service = vsftpd
       name: "{{ ansible_facts['ansible_local']['node3_custom_facts']['packages']['web_package'] }}"
       state: present
 ```
+
+## Variables
+
+### vars declaration
+Variables are either declared on the play section of the playbook or in include files
+
+### Vars in play section of playbooks
+if a value starts with a variable double-quotes must be used
+```yaml
+---
+- name: Create a user using a variable
+  hosts: node3
+  vars:
+    users: gru
+  tasks:
+  - name: create user {{ users }} on host {{ ansible_hostname }}
+    user:
+      name: "{{ users }}"
+``` 
+### Vars in include file
+* create a vars directory in current project
+```code
+my_package: nmap
+my_ftp_service: vsftpd
+my_file_service: smb
+```
+* reference the file in the playbook using vars_files: vars/<filename>
+```yaml
+---
+- name: install some stuff using vars
+  hosts: node3
+  vars_files: vars/common
+  tasks:
+  - name: install packages
+    dnf:
+      name: "{{ my_package }}"
+      state: present
+```
+
+### Variable types
+| type | Usage |
+| ---- | ----- |
+| fact | system propertie |
+| variable | user declared value |
+| magic variable | system variable automatically set |
+
+

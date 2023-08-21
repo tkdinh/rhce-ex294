@@ -1,0 +1,9 @@
+---
+- name: install some stuff using vars
+  hosts: node3
+  vars_files: vars/common
+  tasks:
+  - name: install packages
+    dnf:
+      name: "{{ my_package }}"
+      state: present
