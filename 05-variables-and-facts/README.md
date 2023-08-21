@@ -224,7 +224,6 @@ $ANSIBLE_VAULT;1.1;AES256
 ```
 * command usage
 `$ ansible-playbook playbook-using-secrets.yaml --limit node1 --ask-vault-password`
-```
 * can be automated using a vault password file
 
 # Capturing command output with **register**
