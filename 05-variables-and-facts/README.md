@@ -140,4 +140,4 @@ my_file_service: smb
 ### vars in implicit include files
 * group_vars
 * host_vars
-check [a link](host-group-vars)
+check [implicit include files](https://github.com/jfgsilva/rhce-ex294/tree/variables-facts/05-variables-and-facts/host-groups-vars)
