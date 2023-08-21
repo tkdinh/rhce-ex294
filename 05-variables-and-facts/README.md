@@ -184,6 +184,7 @@ command > playbook > vars file
 
 # Vault
 * man ansible-vault
+
 | sub-command | description |
 | ----------- | ----------- |
 | create         | Create new vault encrypted file |
