@@ -1,0 +1,20 @@
+---
+- name: copy facts to all hosts
+  hosts: all
+  vars:
+    remote_dir: /etc/ansible/facts.d/
+  tasks:
+  - name: Create remote dir
+    file:
+      path: "{{ remote_dir }}"
+      state: directory
+  
+  - name: Copy package facts to {{ remote_dir }} on {{ hostname }}
+    copy:
+      src: files/packages.ini
+      dest: "{{ remote_dir }}/packages.fact"
+  
+  - name: Copy service facts to {{ remote_dir }} on {{ hostname }}
+    copy:
+      src: files/services.ini
+      dest: "{{ remote_dir }}/services.fact"
