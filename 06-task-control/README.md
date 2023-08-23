@@ -211,3 +211,32 @@ Handlers are used to trigger an action if a change takes place.
 ### forcing handler execution even if nothing changes
 at the play leve set
 * force_handlers: true
+
+## failing a task
+```yaml
+---
+- name: using failed_when
+  hosts: localhost
+  tasks:
+  - name: run some script
+    command: echo hello world
+    ignore_errors: yes
+    register: contents
+    failed_when: '"world" in contents.sdout'
+  - name: we failed the task so we shouldn t see this
+    debug:
+      msg: "Hi there"
+## changed_when is used to force a task changed something 
+```yaml
+--- 
+- name: using changed_when
+  hosts: localhost
+  tasks:
+  - name: check local time
+    command: date
+    register: result
+    changed_when: false
+  - name: print time
+    debug:
+      var: result.stdout
+```

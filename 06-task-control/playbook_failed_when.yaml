@@ -1,0 +1,13 @@
+---
+- name: using failed_when
+  hosts: localhost
+  tasks:
+  - name: run some script
+    command: echo hello world
+    ignore_errors: yes
+    register: contents
+    failed_when: '"world" in contents.sdout'
+  - name: make sure we get here because of ignore errors 
+    debug:
+      msg: "Hi there"
+

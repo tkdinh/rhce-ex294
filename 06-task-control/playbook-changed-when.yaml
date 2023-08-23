@@ -1,0 +1,11 @@
+--- 
+- name: using changed_when
+  hosts: localhost
+  tasks:
+  - name: check local time
+    command: date
+    register: result
+    changed_when: false
+  - name: print time
+    debug:
+      var: result.stdout
