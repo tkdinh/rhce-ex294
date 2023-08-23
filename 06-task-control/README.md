@@ -182,4 +182,32 @@ users:
     when:
       result.rc == 1
 ```
-
+## Handlers
+Handlers are used to trigger an action if a change takes place.
+* for instance, let's suppose you change httpd config, and you which to restart the service. handlers allow this, but only if a change is made, avoiding a restart if the change is not made.
+* keywords
+** notify
+** handlers
+```yaml
+---
+- name: example usage of handlers
+  hosts: node3
+  vars:
+    webserver:
+      - httpd
+  tasks:
+  - name: change landing page
+    copy:
+      contents: "Hello World"
+      dest: /var/www/html/index.html
+    notify:
+      restart_httpd
+  handlers:
+  - name: restart_httpd
+    service:
+      name: httpd
+      state: restarted
+```
+### forcing handler execution even if nothing changes
+at the play leve set
+* force_handlers: true
