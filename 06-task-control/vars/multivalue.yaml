@@ -1,0 +1,9 @@
+users:
+  - username: arthur
+    homedir: /home/arthur
+    shell: /bin/bash
+    groups: wheel
+  - username: morgana
+    homedir: /home/morgana
+    shell: /bin/bash
+    groups: users
