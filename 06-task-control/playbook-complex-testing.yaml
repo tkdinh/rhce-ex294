@@ -1,0 +1,12 @@
+---
+- name: complex testing
+  hosts: localhost
+  vars:
+    my_var: Hello
+  tasks:
+  - name: execute kernel update if enough space is available also using loop 
+    package:
+      name: kernel
+      state: latest
+    loop: "{{ ansible_facts['mounts'] }}"
+    when: item.mount == "/boot" and item.size_available > 200000000
