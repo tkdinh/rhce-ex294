@@ -226,6 +226,7 @@ at the play leve set
   - name: we failed the task so we shouldn t see this
     debug:
       msg: "Hi there"
+```
 ## changed_when is used to force a task changed something 
 ```yaml
 --- 
@@ -240,3 +241,4 @@ at the play leve set
     debug:
       var: result.stdout
 ```
+
