@@ -1,0 +1,12 @@
+---
+- name: combining when and register
+  hosts: localhost
+  tasks:
+  - name: register contents of command
+    shell: cat /etc/passwd
+    register: contents
+  - name: output msg if expected content is not found
+    debug:
+      msg: "user morgan was not found!"
+    when:
+      contents.stdout.find("morgan") == -1

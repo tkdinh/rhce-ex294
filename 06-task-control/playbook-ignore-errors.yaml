@@ -1,0 +1,21 @@
+---
+- name: using ignore errors just to capture some output
+  hosts: localhost
+  tasks:
+  - name: get httpd service status
+    command:
+      systemctl is-active httpd
+    ignore_errors:
+      yes
+    register: result
+  - name: output error msg
+    debug:
+      var: result # better to use this
+      #msg: "this is the returned content: {{ result }}"
+  - name: activate service if httpd is not running
+    service:
+      name: httpd
+      state: started
+      enabled: true
+    when:
+      result.rc == 1

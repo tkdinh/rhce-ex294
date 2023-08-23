@@ -143,4 +143,43 @@ users:
     loop: "{{ ansible_facts['mounts'] }}"
     when: item.mount == "/boot" and item.size_available > 200000000
 ```
+### combining register and when
+```yaml
+---
+- name: combining when and register
+  hosts: localhost
+  tasks:
+  - name: register contents of command
+    shell: cat /etc/passwd
+    register: contents
+  - name: output msg if expected content is not found
+    debug:
+      msg: "user morgan was not found!"
+    when:
+      contents.stdout.find("morgan") == -1
+```
+### controlling flow with ignore_errors and using conditionals
+```yaml
+---
+- name: using ignore errors just to capture some output
+  hosts: localhost
+  tasks:
+  - name: get httpd service status
+    command:
+      systemctl is-active httpd
+    ignore_errors:
+      yes
+    register: result
+  - name: output error msg
+    debug:
+      var: result # better to use this
+      #msg: "this is the returned content: {{ result }}"
+  - name: activate service if httpd is not running
+    service:
+      name: httpd
+      state: started
+      enabled: true
+    when:
+      result.rc == 1
+```
 
