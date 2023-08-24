@@ -241,4 +241,30 @@ at the play leve set
     debug:
       var: result.stdout
 ```
+## using **block** to apply the same conditional for groups of tasks:
+block is set at the task level, and tasks below it are indented
+```yaml
+---
+- name: block usage example
+  hosts: node3
+  tasks:
+  - name: set up http
+    block:
+      - name: install package
+        package:
+          name: http
+          state: present
+      - name: activate service
+        service:
+          name: httpd
+          state: started
+          enabled: true
+    when:
+      ansible_distribution == "CentOS"
+```
+### Block with rescue and always statement
+* block is used to group different tasks together 
+** for error management: **rescue** keyword
+** for executing tasks regardless of status: **always** keyword
+
 
