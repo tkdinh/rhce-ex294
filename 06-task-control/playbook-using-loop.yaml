@@ -1,0 +1,11 @@
+---
+- name: loop demonstration
+  hosts: node1
+  tasks:
+  - name: use a loop with service package
+    service:
+      name: "{{ item }}" 
+      state: started
+    loop:
+      - httpd
+      - firewalld

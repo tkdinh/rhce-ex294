@@ -1,0 +1,14 @@
+---
+- name: loop demonstration
+  hosts: node1
+  vars:
+    services:
+      - vsftpd
+      - httpd
+  tasks:
+  - name: use a loop with service package
+    service:
+      name: "{{ item }}" 
+      state: started
+    loop:
+      "{{ services }}"

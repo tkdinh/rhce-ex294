@@ -1,0 +1,21 @@
+---
+- name: test if var is in vars
+  hosts: localhost
+  vars:
+    supported_packages:
+      - httpd
+      - sqlserver
+    database:
+      - mariadb
+      
+  tasks:
+  - name: actual failing test
+    debug:
+      msg: " maria db is not in supported packages"
+    when:
+      database not in supported_packages
+  - name: skipping the failed test
+    debug:
+      msg: " maria db is not in supported packages"
+    when:
+      database in supported_packages

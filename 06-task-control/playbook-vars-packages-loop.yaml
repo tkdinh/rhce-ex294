@@ -1,0 +1,11 @@
+---
+- name: another example using vars in files with loop keyword
+  hosts: localhost
+  vars_files: vars/packages.yaml
+  tasks:
+  - name: install packages using dnf
+    dnf:
+      name: "{{ item.name }}"
+      state: "{{ item.state }}"
+    loop:
+      "{{ packages }}"

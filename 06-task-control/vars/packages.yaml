@@ -1,0 +1,8 @@
+packages:
+  - name: httpd
+    state: present
+  - name: vsftpd
+    state: present
+  - name: mysql-server
+    state: present
+

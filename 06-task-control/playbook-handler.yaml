@@ -1,0 +1,18 @@
+---
+- name: example usage of handlers
+  hosts: node3
+  vars:
+    webserver:
+      - httpd
+  tasks:
+  - name: change landing page
+    copy:
+      contents: "Hello World"
+      dest: /var/www/html/index.html
+    notify:
+      restart_httpd
+  handlers:
+  - name: restart_httpd
+    service:
+      name: httpd
+      state: restarted
