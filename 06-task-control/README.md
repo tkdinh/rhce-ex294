@@ -266,5 +266,25 @@ block is set at the task level, and tasks below it are indented
 * block is used to group different tasks together 
 ** for error management: **rescue** keyword
 ** for executing tasks regardless of status: **always** keyword
-
-
+```yaml
+---
+- name: example usage of block with always and rescue
+  hosts: node3
+  tasks:
+  - name: example usage of block
+    block:
+      - name: remove a file that doesn't not exist
+        shell: "rm /home/someuser/somefile"
+      - name: ouptut if successful
+        debug:
+          msg:
+            block task was executed
+    rescue:
+      - name: rescue task example usage
+        debug:
+          msg: rescue task was executed
+    always:
+      - name: always task example usage
+        debug:
+          msg: always task was executed
+```
