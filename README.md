@@ -39,4 +39,5 @@ Simply run `$ vagrant up`
 ## Resetting the lab
 Run `$ reset_lab.sh`
 
+# Course
 [01-installation](01-installation/README.MD)
