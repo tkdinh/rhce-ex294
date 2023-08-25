@@ -9,3 +9,5 @@
 * if the file is copied sucessfully than httpd must be restarted, if it fails the playbook should show an error message
 * firewall must be configured for http and https services
 
+## solution
+* check initial-commands.sh first

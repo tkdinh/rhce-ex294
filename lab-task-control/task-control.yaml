@@ -1,0 +1,61 @@
+---
+- name: ensure localhost has required content file
+  hosts: localhost
+  tasks:
+  - name: create file with contents
+    copy:
+      content:
+        "Welcome to my webserver"
+      dest: /tmp/index.html
+
+- name: playbook for taskvars lab
+  hosts: all
+  vars_files: vars/packages.yaml
+  tasks:
+  - name: installing stuff conditionally
+    block:
+    - name: installing packages
+      dnf:
+        name: "{{ packages }}"
+        state: present
+      failed_when: 
+        not (ansible_distribution == "RedHat" or ansible_distribution == "CentOs")
+    - name: start and enable the services
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: true
+      loop:
+        - httpd
+        - firewalld
+    - name: copy file
+      copy:
+        src: /tmp/index.html
+        dest: /var/www/html/index.html
+      notify: restart_httpd
+    - name: configure the firewall
+      firewalld:
+        immediate: true
+        permanent: true
+        service: "{{ item }}"
+        state: enabled
+      loop:
+        - http
+        - https
+      notify: restart_firewalld
+    when:
+      (ansible_distribution == "RedHat" or ansible_distribution == "CentOsq")
+    rescue:
+    - name: installing conditionally failed 
+      debug:
+        msg: Host {{ ansible_hostname }} does not meet minimal requirements
+  
+  handlers:
+  - name: restart_httpd
+    service:
+      name: httpd
+      state: restarted
+  - name: restart_firewalld
+    service: 
+      name: firewalld
+      state: restarted
