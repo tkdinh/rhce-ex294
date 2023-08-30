@@ -1,0 +1,13 @@
+---
+- name: playbook demonstrating stat usage
+  hosts: localhost
+  tasks:
+  - name: using stat
+    stat:
+      path: /etc/hosts
+    register: content
+  - name: diplaying contents 
+    debug:
+      msg: "{{ content.stat }}"
+    when:
+      content.stat.exists

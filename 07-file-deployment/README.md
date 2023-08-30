@@ -12,3 +12,22 @@ Several modules can be used to depoly file, depending on the objectives.
 | replace | replaces strings in files based on regex |
 | synchronize | rsync based tasks |
 | stat | gets stats on file | 
+
+### stat - manage file attributes
+stat modules gets files status and is mainly used to get infofrom the file and is used in tandem with the register and when keywords in ansible
+
+```yaml
+---
+- name: playbook demonstrating stat usage
+  hosts: localhost
+  tasks:
+  - name: using stat
+    stat:
+      path: /etc/hosts
+    register: content
+  - name: diplaying contents 
+    debug:
+      msg: "{{ content.stat }}"
+    when:
+      content.stat.exists
+```
