@@ -1,5 +1,7 @@
 # File Deployment
+
 ## Modules stat and file
+
 Several modules can be used to depoly file, depending on the objectives.
 | module | Usage |
 | ------ | ----- |
@@ -14,6 +16,7 @@ Several modules can be used to depoly file, depending on the objectives.
 | stat | gets stats on file | 
 
 ### stat - manage file attributes
+
 stat modules gets files status and is mainly used to get infofrom the file and is used in tandem with the register and when keywords in ansible
 
 ```yaml
@@ -31,7 +34,9 @@ stat modules gets files status and is mainly used to get infofrom the file and i
     when:
       content.stat.exists
 ```
+
 you can also fail controlling the flow
+
 ```yaml
 ---
 - name: playbook demonstrating stat usage and controling the flow
@@ -54,7 +59,9 @@ you can also fail controlling the flow
 ```
 
 ### file
-file module is used to change file attributes, works great with stat module to conditionally change something
+
+file module is used to change file attributes, works great with stat module to conditionally change something. You can also use it to create files and dirs, or remove them.
+
 ```yaml
 ---
 - name: playbook demonstrating stat and file module
@@ -79,9 +86,16 @@ file module is used to change file attributes, works great with stat module to c
     when:
       content.stat.pw_name != "root" and content.stat.mode != "0600"
 ```
+
+* creating and removing files
+
+
 ## File contents
+
 ### lineinfile
+
 using regex to change a line in some file
+
 ```yaml
 ---
 - name: lineinfile usage example
@@ -111,3 +125,31 @@ using regex to change a line in some file
       name: NetWorkManager
       state: restarted
 ```
+
+### blockinfile
+
+blockinfile inserts a block delimited by markers. These markers can be changed with *marker*
+Also, using the "|" char after block appends the newline char at de end of the line. Using ">" would concatenate the different lines in a single one in the resulting file.
+
+```yaml
+---
+- name: lineinblock usage example
+  hosts: localhost
+  vars_files:
+    vars/lineinblock
+  tasks:
+  - name: copy /etc/hosts
+    copy:
+      src: /ect/hosts
+      dest: /home/{{ user }}/hosts
+  - name: managing /etc/hosts copy example
+    # don't forget to add the pipe and permissions are {{ content.stat    .permissions }}
+    blockinfile:
+      path: /home/{{ user }}/hosts
+      block: |
+        192.168.0.23 host1.rhce-ex194.com
+        192.168.0.24 host2.rhce-ex194.com
+        192.168.0.25 host3.rhce.ex194.com
+      state: present
+```
+

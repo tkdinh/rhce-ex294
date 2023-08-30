@@ -1,0 +1,20 @@
+---
+- name: using the file module
+  hosts: localhost
+  vars:
+    fullpath: /tmp/newdir/newsubdir
+  vars_files:
+    vars/lineinblock
+  tasks:
+  - name: create dir and subdir
+    file:
+      path: "{{ fullpath }}"
+      state: directory #could be file, directory, touch or absent
+      mode: 0770
+      owner: "{{ user }}"
+      group: "{{ user }}"
+      recurse: true # needed when state is set to directory
+  - name: create a file
+    file:
+      path: "{{ fullpath }}/newfile"
+      state: touch
