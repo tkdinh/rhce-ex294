@@ -1,0 +1,17 @@
+---
+- name: block usage example
+  hosts: node3
+  tasks:
+  - name: set up http
+    block:
+      - name: install package
+        package:
+          name: http
+          state: present
+      - name: activate service
+        service:
+          name: httpd
+          state: started
+          enabled: true
+    when:
+      ansible_distribution == "CentOS"
