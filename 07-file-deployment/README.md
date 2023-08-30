@@ -53,3 +53,30 @@ you can also fail controlling the flow
       content.stat.pw_name != "root" and content.stat.mode != "0600"
 ```
 
+### file
+file module is used to change file attributes, works great with stat module to conditionally change something
+```yaml
+---
+- name: playbook demonstrating stat and file module
+  hosts: localhost
+  become: true
+  tasks:
+  - name: create a file
+    command:
+      touch /tmp/myfile
+  - name: using stat
+    stat:
+      path: /tmp/myfile
+    register: content
+  - name: diplaying contents 
+    debug:
+      msg: "{{ content.stat }}"
+  - file:
+      path: /tmp/myfile
+      group: jfcgsilva
+      mode: '0600'
+      owner: root 
+    when:
+      content.stat.pw_name != "root" and content.stat.mode != "0600"
+```
+
