@@ -31,3 +31,25 @@ stat modules gets files status and is mainly used to get infofrom the file and i
     when:
       content.stat.exists
 ```
+you can also fail controlling the flow
+```yaml
+---
+- name: playbook demonstrating stat usage and controling the flow
+  hosts: localhost
+  tasks:
+  - name: create a file
+    command:
+      touch /tmp/myfile
+  - name: using stat
+    stat:
+      path: /tmp/myfile
+    register: content
+  - name: diplaying contents 
+    debug:
+      msg: "{{ content.stat }}"
+  - fail:
+      msg: "user and/or permissions are incorrect. owner is {{ content.stat.pw_name }} and permissions are {{ content.stat.mode }}"
+    when:
+      content.stat.pw_name != "root" and content.stat.mode != "0600"
+```
+
