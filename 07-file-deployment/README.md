@@ -1,5 +1,5 @@
 # File Deployment
-## Modules
+## Modules stat and file
 Several modules can be used to depoly file, depending on the objectives.
 | module | Usage |
 | ------ | ----- |
@@ -79,4 +79,35 @@ file module is used to change file attributes, works great with stat module to c
     when:
       content.stat.pw_name != "root" and content.stat.mode != "0600"
 ```
+## File contents
+### lineinfile
+using regex to change a line in some file
+```yaml
+---
+- name: lineinfile usage example
+  hosts: localhost
+  tasks:
+  - name: change resolv.conf
+    lineinfile:
+      path: /etc/resolv.conf
+      regexp: '^nameserver'
+      line: 'nameserver 8.8.8.8'
+    notify: restart_network
+  - name: configure sshd
+    lineinfile:
+      path: /etc/ssh/sshd_config
+      regexp: '^PermitRootLogin'
+      line: 'PermitRootLogin no'
+    notify:
+      restart_sshd
 
+  handlers:
+  - name: restart_sshd
+    service:
+      name: sshd
+      state: restarted
+  - name: restart_network
+    service:
+      name: NetWorkManager
+      state: restarted
+```
