@@ -1,0 +1,16 @@
+---
+- name: lineinblock usage example
+  hosts: localhost
+  vars_files:
+    vars/lineinblock
+  tasks:
+  - name: managing /etc/hosts copy example
+    # don't forget to add the pipe and permissions are {{ content.stat    .permissions }}
+    blockinfile:
+      path: /home/{{ user }}/hosts
+      block: |
+        192.168.0.23 host1.rhce-ex194.com
+        192.168.0.24 host2.rhce-ex194.com
+        192.168.0.25 host3.rhce.ex194.com
+      state: present
+
