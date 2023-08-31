@@ -152,4 +152,29 @@ Also, using the "|" char after block appends the newline char at de end of the l
         192.168.0.25 host3.rhce.ex194.com
       state: present
 ```
+### fetch
 
+Using fetch it's easy to get log data from nodes and process it in control node for evaluation. Also node the usage of {{ range(x,y)|list }} in the loop section to generate a integer sequence
+
+
+```yaml
+---
+- name: using fetch to get log from slave nodes
+  hosts: all
+  tasks:
+  - name: fetching log data
+    fetch:
+      dest: /tmp
+      src: /var/log/wtmp
+- name: conciliating the binaries in a single readable file
+  hosts: localhost
+  vars:
+    prefix: /tmp/node
+    suffix: /var/log/wtmp
+    conciliated_file: allnodes-last.out
+  tasks:
+  - name: ouput the log into file
+    shell: last -f {{ prefix }}{{ item }}{{ suffix}} >> /tmp/{{ conciliated_file }}
+    loop: "{{ range(1,5)|list }}" # also use - 1\n - 2\n - 3\n - 4\n
+
+```
