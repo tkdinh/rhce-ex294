@@ -32,7 +32,12 @@ Make sure that the following env variables are populated:
 * RH_SUBSCRIPTION_MANAGER_PW = your redhat account password
 * RHEL_ISO_PATH = the full path for thr redhat iso file 
 * get used to populate the .vimrc file so you can edit playbook files easily
-
+* Install ansible and necessary ansible collections (For centos stream v9)
+```bash
+  $ sudo dnf -y install ansible-core
+  $ ansible-galaxy collection install ansible.posix
+  $ ansible-galaxy collection install community.general
+```
 
 Simply run `$ vagrant up`
 
