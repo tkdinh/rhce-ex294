@@ -13,6 +13,11 @@
       shell: /bin/bash
       groups: wheel
       append: yes
+  - name: Allow user to run all command without password
+    copy:
+      dest: /etc/sudoers.d/user
+      content: "user  ALL=(ALL)  NOPASSWD:ALL"
+      force: yes
   - name: Changing User Password
     shell: echo password | sudo passwd user --stdin
   - name: Changing Root Password
