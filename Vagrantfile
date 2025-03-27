@@ -91,12 +91,14 @@ Vagrant.configure("2") do |config|
   config.vm.define :node3 do |node3|
     node3.vm.box = "joaofcgsilva/rhel9"
     node3.vm.network :private_network, ip: "10.0.0.103"
+    node3.vm.provision "shell", path: "bootstrap-nodes.sh"
   end
   # configuration for node 4
   config.vm.define :node4 do |node4|
     node4.vm.box = "joaofcgsilva/rhel9"
     node4.vm.network :private_network, ip: "10.0.0.104"
     node4.vm.provision "shell", inline: "touch node4"
+    node4.vm.provision "shell", path: "bootstrap-nodes.sh"
   end
   # configuration for control node
   config.vm.define :control do |control|
